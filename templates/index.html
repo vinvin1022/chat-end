@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<head>
+  <title>OpenAI Quickstart</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{ bootstrap.load_css() }}
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  
+  <title>Bootstrap Example</title>
+  <style>
+    /* 定义滚动条的样式 */
+    ::-webkit-scrollbar {
+      width: 10px; /* 滚动条宽度 */
+    }
+
+    /* 定义滚动条轨道的样式 */
+    ::-webkit-scrollbar-track {
+      background-color: RGBA(33,37,41,1)!important; /* 滚动条轨道的背景色 */
+    }
+
+    /* 定义滚动条滑块的样式 */
+    ::-webkit-scrollbar-thumb {
+      background: #888; /* 滚动条滑块的背景色 */
+      border-radius: 5px;
+    }
+
+    /* 鼠标悬停在滚动条上时的样式 */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555; /* 鼠标悬停时滚动条滑块的背景色 */
+    }
+
+    .sendmsg .form-control{
+      font-size: 1rem;
+
+    }
+    .sendmsg .form-control:focus{
+      color: rgba(255,255,255, 0.8);
+      background-color: rgba(68,70,84, 1);
+      border-color: transparent;
+      outline: 0;
+      box-shadow: 0 0 0 0 rgba(13,110,253,.25);
+      font-weight: normal;
+      font-size: 1rem;
+    }
+    .sendmsg .btn{
+      background-color: rgba(68,70,84, 1);
+    }
+    .sendmsg  .btn:hover{
+      background-color: rgba(68,70,84, 1);
+      border-color: transparent;
+    }
+
+    .navbar-top{
+      display: none;
+    }
+    .content{
+      position: relative;
+      top: 56px
+    }
+    .text-overflow{
+      text-overflow: ellipsis;
+    }
+
+    .dark-800 {
+      --tw-bg-opacity: 1;
+      background-color: rgba(52,53,65);
+    }
+
+    .dark-1000 {
+      --tw-bg-opacity: 1;
+      background-color: rgba(68,70,84);
+    }
+
+    .card {
+      background: transparent;
+      color: rgba(255,255,255,.8);
+      border: none;
+    }
+
+    .avator{
+      background-color: rgb(0, 150, 166);
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      line-height: 30px;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .text-gray-500{
+      color: rgba(142,142,160, 0.5);
+      font-size: 16px;
+     
+    
+    }
+    .list-group-item{
+      border: none;
+    }
+    .shadowas{
+      background-image: linear-gradient(180deg,rgba(53,55,64,0),#353740 58.85%);
+    }
+
+    @media (min-width: 576px) {
+      .content {
+        top: 0
+      }
+    }
+ 
+  </style>
+
+</head>
+
+<body>
+
+
+  <div class="container-fluid">
+    <nav class="navbar navbar-top navbar-dark bg-dark fixed-top d-block d-sm-none">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Offcanvas dark navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="d-flex mt-3" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="row content dark-800">
+      <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-3 col-sm-3 d-none d-sm-block text-bg-dark pe-0" style="height: 100vh; overflow: auto">
+        <div class="card">
+          <div class="card-body">
+
+            {% for item in chats %}
+             
+
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"><i class="fas fa-user px-2"></i> {{item.title}}</p>
+      
+              {% endfor %}
+            <h5 class="card-title fs-6 text-muted">昨天</h5>
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"><i class="fas fa-user px-2"></i> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"><i class="fas fa-comment px-2"></i> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"><i class="fas fa-comment-alt px-2"></i> ome quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"> <i class="fas fa-envelope px-2"></i> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"> <i class="fas fa-comment-dots px-2"></i> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow fs-6"><i class="fas fa-user-friends px-2"></i> Some quick example text to build on the card title and make up the bulk of the card's content.</p> <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p> <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p> <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text overflow-hidden text-nowrap text-overflow">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          
+
+          </div>
+        </div>
+       
+      </div>
+      <div class="col-xxl-10 col-xl-10 col-md-9 col-sm-9 col-12" style="padding-left: 0; padding-right: 0; height: 100vh; overflow: auto">
+       
+        <ul class="list-group list-group-flush">
+          {% for item in conversations %}
+            {% if item.role == "user" %}
+            
+                <li class="list-group-item list-group-item-secondary dark-1000">
+                  <div class="d-flex flex-row container container-sm" style="color: rgba(255,255,255,.8)">
+                    <div class="avator">u</div>
+                    <div class="p-2 flex-grow-1">{{item.content}}</div>
+                    <div class="p-2 d-none d-sm-block" style="width: 100px" >这里是操作</div>
+                  </div>
+                  
+                </li>
+            {% else %}
+                <li class="list-group-item list-group-item-success dark-800">
+                  <div class="d-flex flex-row container container-sm" style="color: rgba(255,255,255,.8)">
+
+                    <div class="avator "  style="background-color: rgb(25, 195, 125);">g</div>
+                    <div class="p-2 flex-grow-1" >{{item.content}}</div>
+                    <div class="p-2 d-none d-sm-block" style="width: 100px">这里是操作</div>
+                  </div>
+                </li>
+
+            {% endif%}
+          {% endfor %}
+        
+        </ul>
+        <nav class="navbar sticky-bottom dark-800 shadowas">
+          
+
+          <div class="d-flex flex-row container" style="color: rgba(255,255,255,.8)">
+            <div class="p-2 flex-fill" > 
+              <div class="input-group input-group-lg mb-3 mt-5 sendmsg">
+                <input type="text" class="form-control dark-1000 border-0 focus-visible" placeholder="send a message..." aria-label="send a message..." aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary border-0" type="button" id="button-addon2">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    
+    </div>
+  
+  </div>
+  
+
+  {{ bootstrap.load_js() }}
+
+</body>

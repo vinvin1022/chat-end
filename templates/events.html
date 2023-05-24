@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>OpenAI Quickstart</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='dog.png') }}"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='/highlight/styles/atom-one-dark.min.css') }}" />
+  
+    <script src="{{ url_for('static', filename='highlight/highlight.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='marked.min.js')}}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+      <h1>EventSource Example</h1>
+      <form name="charForm" onsubmit="event.preventDefault();">
+        <input type="text" name="chat" placeholder="Enter an chat" required />
+        <input type="submit" value="New chat" id="newChat" />
+      </form>
+
+      <form name="charForm" onsubmit="event.preventDefault();">
+        <input type="text" name="content" placeholder="Enter an content" required />
+        <input type="submit" value="Generate contents" id="sendBtn" />
+      </form>
+    
+
+      
+      <div id="events"></div>
+
+
+      <script>
+        window.onload = function(){
+          let conversations = []
+          const sendBtn = document.getElementById("sendBtn")
+          const newChat = document.getElementById("newChat")
+
+          sendBtn.addEventListener("click", () => {
+            const content = document.getElementsByName("content")
+            console.log(content)
+            /* const eventSource = new EventSource(`/events?content=${content[0].value}
+            &chatid=${conversations[0].id}&title=${conversations[0].title}`, { withCredentials: true, charset: 'utf-8' });
+            */
+            const eventSource = new EventSource(`/events?content=${content[0].value}`, { withCredentials: true, charset: 'utf-8' });
+            let k = []
+            eventSource.onmessage = function (event) {
+                // k.push(event.data.decode("utf-8"))
+                data = JSON.parse(event.data).join("")
+                console.log("获取到的数据：", data)
+                document.getElementById('events').innerHTML = marked.parse(data)
+                // hljs.highlightAll();
+                hljs.initHighlightingOnLoad();
+            };
+
+            
+            eventSource.onopen = function(event) {
+              // 连接已打开
+              console.log("连接已打开: ", event)
+        
+            };
+            
+            eventSource.onerror = function(event) {
+              // 发生错误
+              console.log("发生错误: ", event)
+              eventSource.close()
+            };
+            
+            eventSource.onclose = function(event) {
+              // 连接已关闭
+              console.log("连接已关闭: ", event)
+         
+        
+            };
+          })
+          
+          newChat.addEventListener("click", () => {
+            const chat = document.getElementsByName("chat")
+            console.log(chat[0].value)
+            const conversation = {id: Math.random(), title: chat[0].value}
+            locConversations = localStorage.getItem("conversations")
+            if (locConversations) {
+              conversations = JSON.parse(locConversations)
+              conversations.push(conversation)
+              localStorage.setItem("conversations", JSON.stringify(conversations))
+
+            } else {
+              localStorage.setItem("conversations", JSON.stringify([conversation]))
+              conversations = [conversation]
+            }
+            console.log("conversations: ", conversations)
+          })
+          
+        }
+       
+      </script>
+  </body>
+   
+</html>
