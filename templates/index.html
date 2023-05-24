@@ -106,6 +106,12 @@
         top: 0
       }
     }
+
+    .drow{
+      display: grid;
+      grid-template-columns: 30px auto 100px;
+    }
+    
  
   </style>
 
@@ -193,22 +199,29 @@
         <ul class="list-group list-group-flush">
           {% for item in conversations %}
             {% if item.role == "user" %}
-            
                 <li class="list-group-item list-group-item-secondary dark-1000">
-                  <div class="d-flex flex-row container container-sm" style="color: rgba(255,255,255,.8)">
-                    <div class="avator">u</div>
-                    <div class="p-2 flex-grow-1">{{item.content}}</div>
-                    <div class="p-2 d-none d-sm-block" style="width: 100px" >这里是操作</div>
+                  <div class="container container-sm drow" style="color: rgba(255,255,255,.8)">
+                    <div>
+                      <div class="avator">u</div>
+                    </div>
+                    <div class="p-2  flexible-column">
+                      <div>{{item.content}}</div>
+                    </div>
+                    <div class="p-2 d-none d-sm-block fixed-columnr" style="width: 100px" >
+                      <div>这里是操作</div>
+                    </div>
                   </div>
-                  
                 </li>
             {% else %}
                 <li class="list-group-item list-group-item-success dark-800">
-                  <div class="d-flex flex-row container container-sm" style="color: rgba(255,255,255,.8)">
-
-                    <div class="avator "  style="background-color: rgb(25, 195, 125);">g</div>
-                    <div class="p-2 flex-grow-1" >{{item.content}}</div>
-                    <div class="p-2 d-none d-sm-block" style="width: 100px">这里是操作</div>
+                  <div class="container container-sm drow" style="color: rgba(255,255,255,.8)">
+                    <div><div class="avator" style="background-color: rgb(25, 195, 125);">g</div></div>
+                    <div class="p-2  flexible-column" >
+                      {{item.content}}
+                    </div>
+                    <div>
+                      <div class="p-2 d-none d-sm-block" style="width: 100px">这里是操作</div>
+                    </div>
                   </div>
                 </li>
 
