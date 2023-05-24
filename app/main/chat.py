@@ -2,13 +2,15 @@ import json
 from random import choice, randint
 import time
 import uuid
+import openai
 from flask import request, Response
 from extensions import db
 from app.models.conversations import Conversations
 from app.models.chats import Chats
-
 from . import bp
 from faker import Faker
+
+openai.api_key = "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"
 
 fake = Faker()
 
@@ -103,9 +105,9 @@ def chat():
     if len(conversation_history_relative) >= 1:
         index = len(conversation_history_relative) - 1
         single["parent"] = conversation_history_relative[index].get("id")
-        single["cid"] = conversation_history_relative[index].get("children")
+        single["id"] = conversation_history_relative[index].get("children")
     else:
-        single["cid"] = str(uuid.uuid4())
+        single["id"] = str(uuid.uuid4())
 
     conversation_history_relative.append(single)
     print("conversation_history_relative: ", conversation_history_relative)
@@ -128,7 +130,7 @@ def chat():
                 time.time() - start_time
             )  # calculate the time delay of the chunk
             if chunk["choices"][0]["finish_reason"] is not None:
-                collected_messages.append("[DONE]")
+                collected_messages.append("")
 
                 conversation_history.append(
                     {"role": "assistant", "content": full_reply_content}
@@ -139,6 +141,7 @@ def chat():
                     "role": "assistant",
                     "content": full_reply_content,
                     "children": str(uuid.uuid4()),
+                    "last": True,
                 }
 
                 if len(conversation_history_relative) >= 1:
@@ -146,9 +149,10 @@ def chat():
                     print("index: ", index)
                     single["parent"] = conversation_history_relative[index].get("id")
                     # single["parent"] = str(uuid.uuid4())
-                    single["cid"] = conversation_history_relative[index].get("children")
+                    single["id"] = conversation_history_relative[index].get("children")
+                    conversation_history_relative[index]["last"] = False
                 else:
-                    single["cid"] = str(uuid.uuid4())
+                    single["id"] = str(uuid.uuid4())
                 conversation_history_relative.append(single)
                 print("conversation_history_relative: ", conversation_history_relative)
 
@@ -178,6 +182,9 @@ def chat():
     response.headers["Transfer-Encoding"] = "chunked"
     response.headers["Cache-Control"] = "no-cache"
     response.headers["Connection"] = "keep-alive"
+    # 设置跨域头
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Methods", "GET")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    response.headers.add("Access-Control-Allow-Credentials", "true")
     return response
-
-    return {"name": "Hello, world!"}

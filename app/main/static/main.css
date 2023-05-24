@@ -1,0 +1,137 @@
+@font-face {
+  font-family: "ColfaxAI";
+  src: url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff2)
+      format("woff2"),
+    url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ColfaxAI";
+  src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
+    url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* 定义滚动条的样式 */
+::-webkit-scrollbar {
+  width: 8px; /* 滚动条宽度 */
+}
+
+/* 定义滚动条轨道的样式 */
+::-webkit-scrollbar-track {
+  background-color: RGBA(33, 37, 41, 1) !important; /* 滚动条轨道的背景色 */
+}
+
+/* 定义滚动条滑块的样式 */
+::-webkit-scrollbar-thumb {
+  background: transparent; /* 滚动条滑块的背景色 */
+  border-radius: 5px;
+}
+
+#container-left:hover::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* 鼠标悬停在滚动条上时的样式 */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 鼠标悬停时滚动条滑块的背景色 */
+}
+
+/* 隐藏滚动条轨道 */
+#container-right::-webkit-scrollbar {
+  width: 0;
+}
+/* 隐藏滚动条滑块 */
+#container-right::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+/* 隐藏滚动条角落 */
+#container-right::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.sendmsg .form-control {
+  font-size: 1rem;
+}
+.sendmsg .form-control:focus {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(68, 70, 84, 1);
+  border-color: transparent;
+  outline: 0;
+  box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.25);
+  font-weight: normal;
+  font-size: 1rem;
+}
+.sendmsg .btn {
+  background-color: rgba(68, 70, 84, 1);
+}
+.sendmsg .btn:hover {
+  background-color: rgba(68, 70, 84, 1);
+  border-color: transparent;
+}
+
+.navbar-top {
+  display: none;
+}
+.content {
+  position: relative;
+  top: 56px;
+}
+.text-overflow {
+  text-overflow: ellipsis;
+}
+
+.dark-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(52, 53, 65);
+}
+
+.dark-1000 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(68, 70, 84);
+}
+
+.card {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+}
+
+.avator {
+  background-color: rgb(0, 150, 166);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  line-height: 30px;
+  text-align: center;
+  /* margin-top: 6px; */
+}
+
+.text-gray-500 {
+  color: rgba(142, 142, 160, 0.5);
+  font-size: 16px;
+}
+.list-group-item {
+  border: none;
+}
+.shadowas {
+  background-image: linear-gradient(
+    180deg,
+    rgba(53, 55, 64, 0),
+    #353740 58.85%
+  );
+}
+
+@media (min-width: 576px) {
+  .content {
+    top: 0;
+  }
+}
+
+.drow {
+  display: grid;
+  grid-template-columns: 30px auto 140px;
+}
